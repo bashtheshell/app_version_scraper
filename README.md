@@ -4,7 +4,19 @@ The purpose of this repository is to **demonstrate** how one can retrieve the ap
 
 This idea came to fruition after discovering that the software app distributor does not publicly list the version numbers on the webpage for unknown reason. Understandably, the verison are already listed on the *App Store* and *Play Store*, and when you install the apps, you'd be able to find the version number in the app. We can kindly put in a feedback request to have the app distributor provide the information on their webpage for our convenience. However, the request may not get fulfilled in a timely manner. 
 
-In the meantime, we'd have to access this information on our own. Thankfully, the technology nowadays has made it feasible for us to retrieve this information automatically rather than checking each source manually. This would require some UNIX/Linux command-line scripting and web-development knowledge. The command-line utilities that made this possible are `bash`, `curl`, `sed`, `awk`, `grep`, `json_pp`, `unzip`, and `exiftool`. I've developed the [script](./) to scrap the version periodically. 
+In the meantime, we'd have to access this information on our own. Thankfully, the technology nowadays has made it feasible for us to retrieve this information automatically rather than checking each source manually. This would require some UNIX/Linux command-line scripting and web-development knowledge. The command-line utilities that made this possible are `bash`, `curl`, `sed`, `awk`, `grep`, `json_pp`, `unzip`, `exiftool`, and `crontab`. I've developed the [script](./apps_version.sh) to scrap the version periodically using cron job scheduler. In the next section, I'll go into detail.
+
+## What Does the Scraping?
+
+For the iOS app, Apple offers their users a way to fetch the information using their search API through the iTunes Store web service. Please see their [documentation](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#understand) for more information.
+
+As shown in the snippet below, it's safe to say every app in iTunes store has an unique ID that one can look up. Clicking on the link, `https://itunes.apple.com/lookup?id=423121946`, would result in a downloadable JSON file containing all the details you'd see on the website (https://itunes.apple.com/us/app/convo-vrs/id423121946). 
+
+```
+curl -sf "https://itunes.apple.com/lookup?id=423121946" \
+	| json_pp | awk -F':' '/"version"/ { print $2 }' \
+	| sed 's/^\ "//' | sed 's/",//' > ${webdoc_root}convo_ios.txt
+```
 
 
 
