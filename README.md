@@ -1,6 +1,6 @@
 # App Version Scraper
 
-The purpose of this repository is to **demonstrate** how one can retrieve the app version automatically from various sources that are publicly available to them. Rather than wasting time visiting the *App Store* or *Play Store* or downloading the binary files to the computer and execute the first phase of the installer to view the app version, we can either leverage the power of mobile app store's API and `curl` command-line tool to get the job done for us automatically.
+The purpose of this repository is to **demonstrate** how one can retrieve the app version automatically from various sources that are publicly available to them. Rather than wasting time visiting the App/Play Store or downloading the binary files to the computer and execute the first phase of the installer to view the app version, we can either leverage the power of mobile app store's API and `curl` command-line tool to get the job done for us automatically.
 
 This idea came to fruition after discovering that the software app distributor does not publicly list the version numbers on the webpage for unknown reason. Understandably, the verison are already listed on the *App Store* and *Play Store*, and when you install the apps, you'd be able to find the version number in the app. We can kindly put in a feedback request to have the app distributor provide the information on their webpage for our convenience. However, the request may not get fulfilled in a timely manner. 
 
@@ -26,8 +26,15 @@ If you have access to `Terminal` program on macOS or other similar terminal prog
 
 ### For Android:
 
+Unfortunately, unlike Apple, Google Play Store does not offer an API for us to conveniently gather the information we want. I'd have to do some work by visiting the webpage directly through the browser (https://play.google.com/store/apps/details?id=com.convorelay.convomobile&hl=en_US) and inspect the web elements by viewing the source file. Luckily for us, it wasn't as difficult as one might think. Most webpage is actually an HTML script file. So, we'd get a plain-text file using `curl`. The file only contains few thousands lines, and we use `grep` to capture just the matching lines where the version number exists. 
 
+```
+curl -sf "https://play.google.com/store/apps/details?id=com.convorelay.convomobile&hl=en_US" \
+	| grep -E 'Additional Information.*Current Version' | sed 's/^.*Current Version//' | sed 's/Requires Android.*$//' \
+	| sed 's/^.*class="IQ1z0d"><span class="htlgb">//' | sed 's/<.*$//'
+```
 
+### For macOS:
 
 
 ###### <a name="disclaimer">1</a>: DISCLAIMER - This GitHub repository is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Convo Communications, LLC, or any of their subsidiaries or affiliates. All product and company names are the registered trademarks of their original owners. The use of any trade name or trademark is for demonstration, identification, and reference purposes only and does not imply any association with the trademark holder of their product brand.
