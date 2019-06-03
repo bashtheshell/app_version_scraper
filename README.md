@@ -8,15 +8,24 @@ In the meantime, we'd have to access this information on our own. Thankfully, th
 
 ## What Does the Scraping?
 
-For the iOS app, Apple offers their users a way to fetch the information using their search API through the iTunes Store web service. Please see their [documentation](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#understand) for more information.
+### For iOS:
 
-As shown in the snippet below, it's safe to say every app in iTunes store has an unique ID that one can look up. Clicking on the link (https://itunes.apple.com/lookup?id=423121946) would result in a downloadable JSON file containing all the details you'd see on the website here (https://itunes.apple.com/us/app/convo-vrs/id423121946). 
+Apple offers their users a way to fetch the information using their search API through the iTunes Store web service. Please see their [documentation](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#understand) for more information.
+
+As shown in the snippet below (which is modified for demonstration), it's safe to say every app in iTunes store has an unique ID that one can look up. Clicking on the link (https://itunes.apple.com/lookup?id=423121946) would result in a downloadable JSON file containing all the details you'd see on the webpage here (https://itunes.apple.com/us/app/convo-vrs/id423121946). 
 
 ```
 curl -sf "https://itunes.apple.com/lookup?id=423121946" \
 	| json_pp | awk -F':' '/"version"/ { print $2 }' \
-	| sed 's/^\ "//' | sed 's/",//' > ${webdoc_root}convo_ios.txt
+	| sed 's/^\ "//' | sed 's/",//'
 ```
+
+If you have access to `Terminal` program on macOS or other similar terminal program on Linux, you can safely copy and paste the above snippet and run it. You should see the version number in your output.
+
+`curl` acts as a low-level web browser on the command-line. It's intended to be used as a developer tool to debug several Internet-based services. So it'd download the plain-text to your terminal screen for you. The `|` character is called a pipe, which would feed the output of the previous command (which is `curl` in our case) for the next command (`json_pp`) to use as an input to process. `json_pp` would beautify the JSON output in a human-readable format. Lastly, `awk` and `sed` are the most common command-line utilities used to search for patterns and truncate outputs.
+
+### For Android:
+
 
 
 
