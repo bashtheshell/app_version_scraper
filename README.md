@@ -26,7 +26,7 @@ If you have access to `Terminal` program on macOS or other similar terminal prog
 
 ### For Android:
 
-Unfortunately, unlike Apple, Google Play Store does not offer an API for us to conveniently gather the information we want. I'd have to do some work by visiting the webpage directly through the browser [here] (https://play.google.com/store/apps/details?id=com.convorelay.convomobile&hl=en_US) and inspect the web elements by viewing the source file. Luckily for us, it wasn't as difficult as one might think. Most webpage is actually an HTML script file. So, we'd get a plain-text file using `curl`. The file only contains few thousands lines, and we use `grep` to capture just the matching lines where the version number exists. 
+Unfortunately, unlike Apple, Google Play Store does not offer an API for us to conveniently gather the information we want. I'd have to do some work by visiting the webpage directly through the browser [here](https://play.google.com/store/apps/details?id=com.convorelay.convomobile&hl=en_US) and inspect the web elements by viewing the source file. Luckily for us, it wasn't as difficult as one might think. Most webpage is actually an HTML script file. So, we'd get a plain-text file using `curl`. The file only contains few thousands lines, and we use `grep` to capture just the matching lines where the version number exists. 
 
 ```
 curl -sf "https://play.google.com/store/apps/details?id=com.convorelay.convomobile&hl=en_US" \
