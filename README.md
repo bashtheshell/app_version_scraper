@@ -38,6 +38,9 @@ It's also safe to run the above snippet in your terminal program.
 
 ### For macOS:
 
+Unlike the iOS app, the macOS app is not in the App Store. Otherwise, we'd be able to use the same approach as the iOS app. The only way to find out actual version is download the binary file directly from the software distributor. After unarchiving the downloaded zip file, we'd see that the file name contains the version number.
+
+
 
 ###### <a name="disclaimer">1</a>: DISCLAIMER - This GitHub repository is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Convo Communications, LLC, or any of their subsidiaries or affiliates. All product and company names are the registered trademarks of their original owners. The use of any trade name or trademark is for demonstration, identification, and reference purposes only and does not imply any association with the trademark holder of their product brand.
 
