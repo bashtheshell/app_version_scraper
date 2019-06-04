@@ -38,7 +38,7 @@ It's also safe to run the above snippet in your terminal program.
 
 ### For macOS:
 
-Unlike the iOS app, the macOS app is not in the App Store. Otherwise, we'd be able to use the same approach as the iOS app. The only way to find out actual version is download the binary file directly from the software distributor. After unarchiving the downloaded zip file, we'd see that the file name contains the version number.
+Unlike the iOS app, the macOS app is not in the App Store. Otherwise, we'd be able to use the same approach as the iOS app. The only way to find out the version is to actually download the binary file directly from the software distributor. After unarchiving the downloaded zip file, we'd see that the file name contains the version number.
 
 ```
 curl -sf -o Convo_macOS.zip "https://d3uqp1raf0m8tp.cloudfront.net/assets/downloads/Convo_macOS.zip"
