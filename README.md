@@ -12,7 +12,7 @@ In the meantime, we'd have to access this information on our own. Thankfully, th
 
 Apple offers their users a way to fetch the information using their search API through the iTunes Store web service. Please see their [documentation](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/#understand) for more information.
 
-As shown in the snippet below (which is modified for demonstration), it's safe to say every app in iTunes store has an unique ID that one can look up. Clicking on the link (https://itunes.apple.com/lookup?id=423121946) would result in a downloadable JSON file containing all the details you'd see on the webpage here (https://itunes.apple.com/us/app/convo-vrs/id423121946). 
+As shown in the snippet below (which is modified for demonstration), it's safe to say every app in iTunes store has an unique ID that one can look up. Clicking on the link (https://itunes.apple.com/lookup?id=423121946) would result in a downloadable JSON file containing all the details you'd see on the webpage [here](https://itunes.apple.com/us/app/convo-vrs/id423121946). 
 
 ```
 curl -sf "https://itunes.apple.com/lookup?id=423121946" \
@@ -26,13 +26,15 @@ If you have access to `Terminal` program on macOS or other similar terminal prog
 
 ### For Android:
 
-Unfortunately, unlike Apple, Google Play Store does not offer an API for us to conveniently gather the information we want. I'd have to do some work by visiting the webpage directly through the browser (https://play.google.com/store/apps/details?id=com.convorelay.convomobile&hl=en_US) and inspect the web elements by viewing the source file. Luckily for us, it wasn't as difficult as one might think. Most webpage is actually an HTML script file. So, we'd get a plain-text file using `curl`. The file only contains few thousands lines, and we use `grep` to capture just the matching lines where the version number exists. 
+Unfortunately, unlike Apple, Google Play Store does not offer an API for us to conveniently gather the information we want. I'd have to do some work by visiting the webpage directly through the browser [here] (https://play.google.com/store/apps/details?id=com.convorelay.convomobile&hl=en_US) and inspect the web elements by viewing the source file. Luckily for us, it wasn't as difficult as one might think. Most webpage is actually an HTML script file. So, we'd get a plain-text file using `curl`. The file only contains few thousands lines, and we use `grep` to capture just the matching lines where the version number exists. 
 
 ```
 curl -sf "https://play.google.com/store/apps/details?id=com.convorelay.convomobile&hl=en_US" \
 	| grep -E 'Additional Information.*Current Version' | sed 's/^.*Current Version//' | sed 's/Requires Android.*$//' \
 	| sed 's/^.*class="IQ1z0d"><span class="htlgb">//' | sed 's/<.*$//'
 ```
+
+It's also safe to run the above snippet in your terminal program.
 
 ### For macOS:
 
