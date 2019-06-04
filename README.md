@@ -40,6 +40,21 @@ It's also safe to run the above snippet in your terminal program.
 
 Unlike the iOS app, the macOS app is not in the App Store. Otherwise, we'd be able to use the same approach as the iOS app. The only way to find out actual version is download the binary file directly from the software distributor. After unarchiving the downloaded zip file, we'd see that the file name contains the version number.
 
+```
+curl -sf -o Convo_macOS.zip "https://d3uqp1raf0m8tp.cloudfront.net/assets/downloads/Convo_macOS.zip"
+if [ -f Convo_macOS.zip ]
+then
+	unzip -l Convo_macOS.zip | awk '/Convo-/ { print $4 }' | sed 's/Convo-//' \
+		| sed 's/.sparkle_guided.pkg//'
+	rm Convo_macOS.zip
+fi
+```
+
+The above snippet would require `unzip` utility to be installed prior to running. Also, the script would take a few seconds to process since it'd temporarily download the file.
+
+### For Windows:
+
+
 
 
 ###### <a name="disclaimer">1</a>: DISCLAIMER - This GitHub repository is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Convo Communications, LLC, or any of their subsidiaries or affiliates. All product and company names are the registered trademarks of their original owners. The use of any trade name or trademark is for demonstration, identification, and reference purposes only and does not imply any association with the trademark holder of their product brand.
