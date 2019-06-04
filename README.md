@@ -54,7 +54,17 @@ The above snippet would require `unzip` utility to be installed prior to running
 
 ### For Windows:
 
+The approach for Windows is almost similar to the macOS. However, the downloaded `.exe` file doesn't contain the version number. The `exiftool`, which can be found [here](https://www.sno.phy.queensu.ca/~phil/exiftool/), has the ability to read the file's tags or metadata. The `.exe` file contains several 
 
+```
+curl -sf -o Convo_Windows.exe "https://d3uqp1raf0m8tp.cloudfront.net/assets/downloads/Convo_Windows.exe"
+if [ -f Convo_Windows.exe ]
+then
+	exiftool -a Convo_Windows.exe | awk -F':' '/File Version [^Number]/ { print $2 }' \
+		| sed 's/^\ //' 
+	rm Convo_Windows.exe
+fi
+```
 
 
 ###### <a name="disclaimer">1</a>: DISCLAIMER - This GitHub repository is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Convo Communications, LLC, or any of their subsidiaries or affiliates. All product and company names are the registered trademarks of their original owners. The use of any trade name or trademark is for demonstration, identification, and reference purposes only and does not imply any association with the trademark holder of their product brand.
