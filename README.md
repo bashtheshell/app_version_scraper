@@ -70,10 +70,58 @@ fi
 
 ## Presentation
 
-We'd need a way to centrally present the information. One way is to host it on the web server. With my limited web-development knowledge, I was able to make this simply possible using PHP. The PHP script would render the results in HTML. 
+We'd need a way to centrally present the information, and we can do so by hosting it on a web server. With my limited web-development knowledge, I decided to use PHP, which I have no in-depth experience with, to automatically render a HTML page with the desired information. PHP was a sensible choice as it's very intuitive for anyone who's familiar with HTML and a scripting language such as Bash or Perl. Here is the HTML file below containing the PHP script.
 
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Convo Apps Version Viewer</title>
+    </head>
+    <body>
+        <h2>Convo Apps</h2>
+        <?php
+        $convo_versions = array();
+        $convo_platforms = ["android", "ios", "macos", "windows"];
+        $convo_version_files = array("convo_android.txt", "convo_ios.txt", "convo_macos.txt", "convo_windows.txt");
+        $i = 0;
 
+        foreach ($convo_version_files as $file) {
+            $tmp_file = fopen($file, "r") or die("Error: Unable to open the file.");
+            $convo_versions += [$convo_platforms[$i] => fgets($tmp_file)];
+            fclose($tmp_file);
+            $i++;
+        }
+        ?>
+        <table style="width:20%">
+            <tr>
+                <th>Platform</th>
+                <th>Version</th> 
+            </tr>
+            <tr>
+                <td>macOS</td> 
+                <td><?php echo $convo_versions['macos']; ?> </td> 
+            </tr>
+            <tr>
+                <td>iOS</td>
+                <td><?php echo $convo_versions['ios']; ?> </td> 
+            </tr>
+            <tr>
+                <td>Windows</td>
+                <td><?php echo $convo_versions['windows']; ?> </td> 
+            </tr>
+            <tr>
+                <td>Android</td> 
+                <td><?php echo $convo_versions['android']; ?> </td> 
+            </tr>
+        </table>
+    </body>
+</html>
+```
 
+## Known Issues
+
+- If a text file containing the version does not exist, then the PHP script would exit immediately, leaving the HTML rendering incomplete. Yes, you can expect a broken page. This is expected due to the following line containing the `die()` [function](https://www.php.net/manual/en/function.die.php) in the PHP script: `$tmp_file = fopen($file, "r") or die("Error: Unable to open the file.");`. Because of my limited expertise and the sole purpose of this repository, I do not plan on improving the error-handling in the future.
 
 ---
 
