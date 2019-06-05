@@ -70,7 +70,9 @@ fi
 
 ## Presentation
 
-We'd need a way to present the version 
+We'd need a way to centrally present the information. One way is to host it on the web server. With my limited web-development knowledge, I was able to make this simply possible using PHP. The PHP script would render the results in HTML. 
+
+
 
 
 ---
