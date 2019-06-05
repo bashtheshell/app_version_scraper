@@ -100,19 +100,19 @@ We'd need a way to centrally present the information, and we can do so by hostin
             </tr>
             <tr>
                 <td>macOS</td> 
-                <td><?php echo $convo_versions['macos']; ?> </td> 
+                <td><?php echo $convo_versions['macos'];?></td> 
             </tr>
             <tr>
                 <td>iOS</td>
-                <td><?php echo $convo_versions['ios']; ?> </td> 
+                <td><?php echo $convo_versions['ios'];?></td> 
             </tr>
             <tr>
                 <td>Windows</td>
-                <td><?php echo $convo_versions['windows']; ?> </td> 
+                <td><?php echo $convo_versions['windows'];?></td> 
             </tr>
             <tr>
                 <td>Android</td> 
-                <td><?php echo $convo_versions['android']; ?> </td> 
+                <td><?php echo $convo_versions['android'];?></td> 
             </tr>
         </table>
     </body>
