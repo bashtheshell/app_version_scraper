@@ -119,6 +119,8 @@ We'd need a way to centrally present the information, and we can do so by hostin
 </html>
 ```
 
+The above `index.php` script is located in the web server's document root directory along with the version files created by the [scraper script](./apps_version.sh) in a separate location. I used `crontab` to have the scraper script runs every o'clock and create or update the four plain-text files containing the version number for the PHP script to read from.
+
 ## Known Issues
 
 - If a text file containing the version does not exist, then the PHP script would exit immediately, leaving the HTML rendering incomplete. Yes, you can expect a broken page. This is expected due to the following line containing the `die()` [function](https://www.php.net/manual/en/function.die.php) in the PHP script: `$tmp_file = fopen($file, "r") or die("Error: Unable to open the file.");`. Because of my limited expertise and the sole purpose of this repository, I do not plan on improving the error-handling in the future.
