@@ -123,7 +123,7 @@ The above `index.php` script is located in the web server's document root direct
 
 ## See It in Action
 
-I have created a playbook to quickly deploy the configuration I made for the users to see how the scraping works. This would require one to be familar with Ansible, SSH service, and access to a virtual machine or cloud service provider. I used Digital Ocean cloud service provider as they offer a low-cost, effective VM solution.
+I have created a playbook to quickly deploy the configuration I made for the users to see how the scraping works. This would require one to be familar with Ansible, SSH service, and access to a virtual machine or cloud service provider. I used Digital Ocean cloud service provider as they offer a low-cost, effective VM solution. Ansible 2.8 was used at the time of this writing.
 
 In order to run the [playbook](./ubuntu18-04_server_playbook.yml), you should have the following requirements:
 
