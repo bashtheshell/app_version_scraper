@@ -153,7 +153,7 @@ ansible-playbook -i "remote.server.ip.address," ubuntu18-04_server_playbook.yml 
 
 After the playbook completed its run, you should be able to view the webpage through the web browser. Please go to `http://remote.server.ip.address/`
 
-When you are done, you can shutdown and delete the VM as well as the current project folder.
+When you are done, you can shutdown and delete the VM as well as deleting the current project folder.
 
 ```
 # clean up current directory
