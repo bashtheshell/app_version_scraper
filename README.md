@@ -131,10 +131,36 @@ In order to run the [playbook](./ubuntu18-04_server_playbook.yml), you should ha
 - The controller machine must have Python 3.7+ installed. It's recommended to install Python from [Python.org](https://www.python.org/downloads/)
 - On the remote machine (typically a local VM or a VM on cloud provider), the operating system must be Ubuntu 18.04 LTS+
 
-On your controller machine, run the following:
+In the terminal on your controller machine, run the following:
 
+```
+# download the repository and set up the virtual environment to run the playbook
+git clone git@github.com:bashtheshell/app_version_scraper.git
+cd app_version_scraper
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install ansible
 
+# not required but to quickly test ansible setup using ad-hoc command and make sure you're properly connected
+# -u is for the remote user, --private-key is for the private SSH key used to connect remotely
+# Don't forget the comma after the IP address. Uncomment the next line to test
+# ansible all -i "remote.server.ip.address," -m ping -u root --private-key=~/.ssh/remoteserver-id_rsa
 
+# to run the playbook
+ansible-playbook -i "remote.server.ip.address," ubuntu18-04_server_playbook.yml --private-key=~/.ssh/remoteserver-id_rsa
+```
+</br>
+
+After the playbook completed its run, you should be able to view the webpage through the web browser. Please go to `http://remote.server.ip.address/`.
+
+When you are done, you can shutdown and delete the VM as well as the current project folder.
+```
+# clean up current directory
+deactivate
+cd ..
+rm -rf ./app_version_scraper
+```
 
 ## Known Issues
 
