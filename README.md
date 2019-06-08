@@ -123,13 +123,15 @@ The above `index.php` script is located in the web server's document root direct
 
 ## See It in Action
 
-I have created a playbook to quickly deploy the configuration I made for the users to see how the scraping works. This would require one to be familar with Ansible, SSH service, and access to a virtual machine or cloud service provider. I used Digital Ocean cloud provider as they offer a low-cost, effective VM solution.
+I have created a playbook to quickly deploy the configuration I made for the users to see how the scraping works. This would require one to be familar with Ansible, SSH service, and access to a virtual machine or cloud service provider. I used Digital Ocean cloud service provider as they offer a low-cost, effective VM solution.
 
 In order to run the [playbook](./ubuntu18-04_server_playbook.yml), you should have the following requirements:
 
 - A controller machine with macOS or Linux installed (e.g. a desktop or laptop you'd use to remote in a VM via SSH)
 - The controller machine must have Python 3.7+ installed. It's recommended to install Python from [Python.org](https://www.python.org/downloads/)
 - On the remote machine (typically a local VM or a VM on cloud provider), the operating system must be Ubuntu 18.04 LTS+
+
+On your controller machine, run the following:
 
 
 
