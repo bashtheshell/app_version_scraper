@@ -6,7 +6,7 @@ The purpose of this repository is to **demonstrate** how one can retrieve the ap
 
 This idea came to fruition after discovering that the software app distributor does not publicly list the version numbers on the webpage for unknown reason. Understandably, the verisons are already listed on the App Store and Play Store. When you install the apps, you'd be able to find the version number in the app. We can kindly put in a feedback request to have the app distributor provide the information on their webpage for our convenience. However, the request may not get fulfilled in a timely manner. 
 
-In the meantime, we'd have to access this information on our own. Thankfully, the technology nowadays has made it feasible for us to retrieve this information automatically rather than checking each source manually. This would require some UNIX/Linux command-line scripting and web-development knowledge. The command-line utilities that made this possible are `bash`, `curl`, `sed`, `awk`, `grep`, `json_pp`, `unzip`, `exiftool`, and `crontab`. I've developed the complete [script](./apps_version.sh) to scrap the version periodically using cron job scheduler. In the next section, I'll go into detail.
+In the meantime, we'd have to access this information on our own. Thankfully, the technology nowadays has made it feasible for us to retrieve this information automatically rather than checking each source manually. This would require some UNIX/Linux command-line scripting and web-development knowledge. The command-line utilities that made this possible are `bash`, `curl`, `sed`, `awk`, `grep`, `json_pp`, `unzip`, `exiftool`, and `crontab`. I've developed the complete [script] to scrap the version periodically using cron job scheduler. In the next section, I'll go into detail.
 
 ## What Does the Scraping?
 
@@ -119,7 +119,7 @@ We'd need a way to centrally present the information, and we can do so by hostin
 </html>
 ```
 
-The above `index.php` script is located in the web server's document root directory along with the version files created by the [scraper script](./apps_version.sh) in a separate location. I used `crontab` to have the scraper script runs every o'clock and create or update the four plain-text files containing the version number for the PHP script to read from.
+The above `index.php` script is located in the web server's document root directory along with the version files created by the [scraper script](./files/apps_version.sh) in a separate location. I used `crontab` to have the scraper script runs every o'clock and create or update the four plain-text files containing the version number for the PHP script to read from.
 
 ## Known Issues
 
