@@ -1,0 +1,135 @@
+---
+- hosts: all
+  become: true
+  remote_user: root
+  tasks:
+    - name: Update cache and upgrade all packages first
+      apt:
+        force_apt_get: yes
+        upgrade: dist
+        update_cache: yes
+
+    - name: Install the packages
+      apt:
+        force_apt_get: yes
+        name:
+          - nginx
+          - php7.2-fpm
+          - unzip
+          - libimage-exiftool-perl
+
+    - name: Enable the nginx service and PHP-FPM
+      service:
+        name: "{{ item }}"
+        enabled: yes
+      loop:
+        - nginx
+        - php7.2-fpm
+
+    - name: Create a user for managing the web contents
+      user:
+        name: webuser
+
+    - name: Configure the firewall's config file
+      lineinfile:
+        path: /etc/default/ufw
+        regexp: '^IPV6=yes'
+        line: IPV6=no
+        backrefs: yes
+
+    - name: Configure the firewall rules
+      ufw:
+        state: enabled
+        rule: allow
+        name: '{{ item }}'
+      loop:
+        - "Nginx HTTP"
+        - "OpenSSH"
+
+    - name: Create the web document root directory
+      file:
+        path: /var/www/example.com/html
+        state: directory
+        mode: 0755
+        owner: webuser
+        group: webuser
+
+    - name: Add content to the web document root directory
+      copy:
+        src: files/index.php
+        dest: /var/www/example.com/html/index.php
+        owner: webuser
+        group: webuser
+        mode: 0555
+
+    - name: Configure the nginx server
+      template:
+        src: templates/nginx/example.com
+        dest: /etc/nginx/sites-available/example.com
+
+    - name: Symlinking and activating the web doc root
+      file:
+        src: /etc/nginx/sites-available/example.com
+        path: /etc/nginx/sites-enabled/example.com
+        state: link
+      notify: Restart nginx
+
+    - name: Copy the scraper script to webuser's home directory
+      copy:
+        src: files/apps_version.sh
+        dest: /home/webuser/apps_version.sh
+        owner: webuser
+        group: webuser
+        mode: 0755
+
+    - name: Tunes the PHP FastCGI Processing Manager config
+      lineinfile:
+        path: /etc/php/7.2/fpm/php.ini
+        regexp: '^;cgi.fix_pathinfo=1'
+        line: cgi.fix_pathinfo=0
+        backrefs: yes
+      notify: Restart PHP-FPM
+
+    - name: Add scraper script to webuser's crontab
+      cron:
+        user: webuser
+        name: "Run scraper script every o'clock"
+        minute: "0"
+        job:  "$HOME/apps_version.sh"
+
+    - name: Check if the version files exist in web doc root
+      stat:
+        path: "/var/www/example.com/html/{{ item }}"
+      with_items:
+        - convo_android.txt
+        - convo_ios.txt
+        - convo_macos.txt
+        - convo_windows.txt
+      register: convo_vers
+
+    - name: Create a temporary directory to avoid the become_user warning in next task
+      file:
+        path: /home/webuser/.ansible/tmp
+        state: directory
+        mode: 0700
+        owner: webuser
+        group: webuser
+
+    - name: Run the scraper script at least once if all version files do not exist
+      become: yes
+      become_method: su
+      become_user: webuser
+      command: "$HOME/apps_version.sh"
+      when: not item.stat.exists
+      with_items: "{{ convo_vers.results }}"
+
+  handlers:
+    - name: Restart PHP-FPM
+      service:
+        name: php7.2-fpm
+        state: restarted
+
+    - name: Restart nginx
+      service: 
+        name: nginx
+        state: restarted
