@@ -56,7 +56,7 @@ The above snippet would require `unzip` utility to be installed prior to running
 
 ### For Windows:
 
-The approach for Windows is almost similar to the macOS. However, the downloaded `.exe` file doesn't contain the version number. The `exiftool`, which can be found [here](https://www.sno.phy.queensu.ca/~phil/exiftool/), has the ability to read the file's tags or metadata. The `.exe` file contains several useful tags, including the name of the developer. Although, we only need the version infomation. 
+The approach for Windows is almost similar to the macOS. However, the downloaded `.exe` file doesn't contain the version number. The `exiftool`, which can be found [here](https://exiftool.org/install.html), has the ability to read the file's tags or metadata. The `.exe` file contains several useful tags, including the name of the developer. Although, we only need the version infomation. 
 
 ```
 curl -sf -o Convo_Windows.exe "https://d3uqp1raf0m8tp.cloudfront.net/assets/downloads/Convo_Windows.exe"
